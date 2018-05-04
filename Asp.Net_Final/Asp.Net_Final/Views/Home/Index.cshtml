@@ -1,0 +1,97 @@
+﻿@using Asp.Net_Final.ViewModels
+@using Asp.Net_Final.Models
+
+@model HomeIndexViewModel
+@{
+    /**/
+
+    ViewBag.Title = "Home Page";
+}
+@*Home Index*@
+<link href="~/Public/Css/style.css" rel="stylesheet" />
+<div class="col-md-3">
+    <div class="wrapperGenre">
+        <h4 class="filterTitle">Sort By Genre</h4>
+        <ul class="list-group filterLink">
+            @foreach (Genre gr in Model.genreList.Where(gr=>gr.Status == 1))
+            {
+                <li class="list-group-item">
+                    <a href="#" class="filterGenre" data-genreID="@gr.id">@gr.Name</a>
+                </li>
+            }
+        </ul>
+    </div>
+    <div class="wrapperAuthor">
+        <h4 class="filterTitle">Sort By Author</h4>
+        <ul class="list-group filterLink">
+           @foreach (Author au in Model.authorList.Where(a=>a.Status == 1))
+           {
+               <li class="list-group-item">
+                    <a class="filterAuthor" data-authorID="@au.id" href="#">@au.Name @au.Lastname</a>
+                </li>
+           }
+        </ul>
+    </div>
+</div>
+<div class="col-md-9 wrapperCard">
+    <ul class="list-group wrapBook">
+        @foreach (Book bk in Model.bookList.Where(b => b.Status == 1))
+        {
+            <li class="col-md-3 bookWrapper list-group-item">
+                <div class="imgWrapper">
+                    <img class="bookImg img-responsive" src="~/Public/images/@bk.Image" alt="">
+                </div>
+                <div class="bookName">@bk.Name</div>
+                <div class="bookDescription">@bk.Description</div>
+                <div class="wrap">
+                    <a href="#" data-bookID="@bk.id" class="button boughtBook">Get It</a>
+                    <a href="#" data-bookID="@bk.id" class="button2 bookDetails" data-toggle="modal" data-target="#myModal">Details</a>
+                    @*Modal begin*@
+                    <!-- Modal -->
+                    @*MOdal end*@
+                </div>
+            </li>
+        }
+    </ul>
+    @*Modal  here*@
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title text-center modalBookName">Alatoranliq</h4>
+                </div>
+                <div style="clear:both"></div>
+                <!-- images begin -->
+                <div class="modal-header forModalImg">
+                    <img src="~/Public/images/bk2.jpg" alt="" class="modal-image modal-title">
+                </div>
+                <!-- images end -->
+                <div class="modal-body">
+                    <p class="modalDescription"></p>
+                </div>
+                <div class="modal-header">
+                    <h4 class="modal-title modalAuthorName"></h4>
+                </div>
+                <div class="counts modal-header">
+                    <h4 class="modal-title total count text-left modal-header modalCounts">
+                        <span class="TotalCount"></span>
+                        <br> <span class="BusyCount"></span>
+                    </h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- end Modal -->
+    @*Modal here end*@
+</div>
+
+
+
+

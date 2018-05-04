@@ -1,0 +1,176 @@
+﻿@using Asp.Net_Final.Models
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create</h2>
+@*Form begin*@
+<form class="form-inline" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="Name">Name</label>
+        <input type="text" name="Name" class="form-control" id="Name">
+    </div>
+    <div class="form-group">
+        <label for="Img">Upload Image</label>
+        <input type="file" class="form-control" name="Image" id="Img">
+    </div>
+    <div class="form-group">
+        <label for="PDF">PDF</label>
+        <input type="text" name="PDF" class="form-control" id="PDF">
+    </div>
+    <div class="form-group">
+        <label for="TotalCount">Total Count</label>
+        <input type="number" name="TotalCount" class="form-control" id="TotalCount">
+    </div>
+    <div class="form-group">
+        <label for="BusyCount">Busy Count</label>
+        <input type="number" name="BusyCount" class="form-control" id="BusyCount">
+    </div>
+    <div class="form-group">
+        <label for="Status">Status</label>
+        <input type="number" name="Status" class="form-control" id="Status">
+    </div>
+    <div class="form-group">
+        <label for="Description">Description</label>
+        <input type="text" name="Description" class="form-control" id="Description">
+    </div>
+    <div class="form-group">
+        <label for="ISBN">ISBN</label>
+        <input type="text" name="ISBN" class="form-control" id="ISBN">
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2" for="Genres_ID">Genres_ID</label>
+        <div class="col-md-10">
+            <select class="form-control" id="Genres_ID" name="Genres_ID">
+             @{
+                 List<Genre> genres = ViewBag.Genres;
+                 foreach (Genre genre in genres.Where(g=>g.Status == 1))
+                 {
+                     <option value="@genre.id">@genre.Name</option>
+                  }
+              }
+            </select>
+            <span class="field-validation-valid text-danger" data-valmsg-for="Genres_ID" data-valmsg-replace="true"></span>
+        </div>
+    </div>
+   
+    @{ 
+        if (ViewBag.Error != null)
+        {
+            <div class="alert alert-warning" style="height:50px;">
+                <h2 class="text-center" style="font-size:20px;margin-top:0px;">@ViewBag.Error</h2>
+            </div>
+        }
+        else
+        {
+
+        }
+    }
+    <button type="submit" class="btn btn-default">Submit</button>
+</form>
+<style>
+    .form-group{
+        display:inline-block;
+        width:40%;
+        margin:30px;
+    }
+    .btn-default {
+        display: block;
+        margin-top: 50px;
+        width: 50%;
+        text-align: center;
+    }
+</style>
+@*Form end*@
+@*@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Book</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Image, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PDF, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PDF, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.PDF, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TotalCount, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TotalCount, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TotalCount, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BusyCount, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.BusyCount, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.BusyCount, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Genres_ID, "Genres_ID", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Genres_ID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Genres_ID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ISBN, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ISBN, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ISBN, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Status, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>*@

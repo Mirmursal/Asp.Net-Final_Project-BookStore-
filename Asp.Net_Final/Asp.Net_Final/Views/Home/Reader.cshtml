@@ -1,0 +1,71 @@
+﻿@using Asp.Net_Final.Models
+@using Asp.Net_Final.ViewModels
+@{
+    ViewBag.Title = "Reader";
+
+}
+@{
+    Reader rdr = Session["LoggedUser"] as Reader;
+
+}
+@model HomeReaderViewModel
+<link href="~/Public/Css/Reader.css" rel="stylesheet" />
+
+<div class="mainWrapper">
+    <div class="row readerInfo">
+        <div class="wrapper">
+            <div class="imgWrapper rdrImage">
+                @{ 
+                    if(rdr.Image == null)
+                    {
+                      <img class="img-responsive " src="~/Public/images/noimage.jpg" alt="">
+                    }
+                    else
+                    {
+                        <img class="img-responsive " src="~/Public/images/@rdr.Image" alt="">
+                    }
+                }       
+            </div>
+            <h1>@rdr.Name @rdr.Lastname</h1>
+            <a href="">
+                <span>@rdr.Email</span>
+            </a>
+        </div>
+    </div>
+    <div style="clear:both"></div>
+    <div class="row readerBooks">
+        <h1 class="title">Your Books</h1>
+        <div class="bookWrapper">
+            @if(Model.readerBookList.Count == 0)
+            {
+                <div class="text-center alert alert-info" >
+                    <h4 class="text-center">You have not bought a book yet</h4>
+                </div>
+            }
+            else
+            {
+                  foreach (Book_To_Readers br in Model.readerBookList)
+            {
+                <div class="card" style="width: 23%">
+                <img class="card-img-top" src="~/Public/images/@br.Book.Image" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">@br.Book.Name</h5>
+                    <p class="card-text">@br.Book.Description</p>
+                    <a href="@Url.Action("Read","Home", new { id = br.Book_ID })" class="btnRead" target="_blank" >Read</a>
+                    <a href="#" data-bookId="@br.Book_ID" class="btnBack">Give Back</a>
+                </div>
+            </div>
+            }
+            }
+            <!-- ///////////////////////////////////////////////-->
+          
+           
+
+
+
+            <!-- /////////////// -->
+            <!-- /////////////////////////////////////////////// -->
+        </div>
+    </div>
+</div>
+
